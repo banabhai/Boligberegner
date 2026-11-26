@@ -9,6 +9,6 @@
     "render:andel": "node render.js andel 1750000 reel_andelsbolig.mp4"
   },
   "dependencies": {
-    "playwright": "1.56.1"
+    "playwright": "1.65.1"
   }
 }
