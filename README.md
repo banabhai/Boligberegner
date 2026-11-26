@@ -4,7 +4,7 @@ Boligberegner calculates what it costs to buy a home in Denmark, for both **ejer
 
 This first version covers Denmark only. The plan is to add more countries later.
 
-**Version 1.1.1.** See [CHANGELOG.md](CHANGELOG.md) for what changed in each version. The version is also shown at the bottom of each page.
+**Version 1.1.2.** See [CHANGELOG.md](CHANGELOG.md) for what changed in each version. The version is also shown at the bottom of each page.
 
 ![Calculator](examples/calculator.jpg)
 
@@ -34,6 +34,7 @@ The **Housing Math Reel** (`reel/`) shows the same 4 steps as a 36-second vertic
 | `fonts/` | Self-hosted fonts and their licence (`fonts/OFL.txt`). |
 | `reel/render.js` | Turns the reel into a 1080×1920 MP4 on your own computer. |
 | `examples/` | Screenshots. |
+| `CLAUDE.md` | Project notes and rules for future updates. |
 
 ## Use it
 

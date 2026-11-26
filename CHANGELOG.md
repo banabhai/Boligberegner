@@ -2,6 +2,9 @@
 
 Boligberegner uses version numbers in the form major.minor.patch. The current version is also shown at the bottom of each page.
 
+## 1.1.2 (26 November 2026)
+- Added project notes (CLAUDE.md) with the rules for future updates: version every change, never add videos, keep it secure and private.
+
 ## 1.1.1 (26 November 2026)
 - Fixed the website address in the README. It must use a capital B: https://banabhai.github.io/Boligberegner/
 
