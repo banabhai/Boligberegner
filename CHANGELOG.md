@@ -2,6 +2,11 @@
 
 Boligberegner uses version numbers in the form major.minor.patch. The current version is also shown at the bottom of each page.
 
+## 1.2.0 (26 November 2026)
+- "Check for updates" button at the bottom of the calculator, working the same way as Heartbeat. The app also checks by itself when you open it and every hour. When a new version is installed, a bar offers Restart, so nothing you are typing is lost. Saved inputs stay on the device.
+- The calculator now opens offline on the live site: the browser keeps a copy of the app's own files (no personal data). The privacy notice describes this.
+- A "?" button after every input. Tap or hover to see what the input means, how to find your own figure, and where the default value comes from.
+
 ## 1.1.2 (26 November 2026)
 - Added project notes (CLAUDE.md) with the rules for future updates: version every change, never add videos, keep it secure and private.
 

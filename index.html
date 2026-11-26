@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; manifest-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; manifest-src 'self'; worker-src 'self'; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -78,8 +78,10 @@
       </section>
     </main>
   </div>
+<div class="updbar" id="upd-bar" role="status" hidden><span>A new version of Boligberegner is installed.</span><button type="button" id="upd-restart">Restart</button></div>
 <footer class="foot">
-  <span>Boligberegner version 1.1.2</span>
+  <span>Boligberegner version 1.2.0</span>
+  <span class="upd"><button type="button" class="btn" id="upd-btn">Check for updates</button><span id="upd-status" role="status"></span></span>
   <span>Estimates only. Not financial advice.</span>
   <a href="https://github.com/banabhai/boligberegner#terms-of-use" target="_blank" rel="noopener noreferrer">Terms of use</a>
   <a href="https://github.com/banabhai/boligberegner#privacy-notice" target="_blank" rel="noopener noreferrer">Privacy</a>

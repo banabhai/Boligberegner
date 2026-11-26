@@ -4,7 +4,7 @@ Boligberegner calculates what it costs to buy a home in Denmark, for both **ejer
 
 This first version covers Denmark only. The plan is to add more countries later.
 
-**Version 1.1.2.** See [CHANGELOG.md](CHANGELOG.md) for what changed in each version. The version is also shown at the bottom of each page.
+**Version 1.2.0.** See [CHANGELOG.md](CHANGELOG.md) for what changed in each version. The version is also shown at the bottom of each page.
 
 ![Calculator](examples/calculator.jpg)
 
@@ -90,6 +90,7 @@ Last updated: 26 November 2026.
 - **No collection.** The tool has no server, database, user accounts, analytics, advertising, tracking pixels or social media plugins. The calculations run in your browser, and the numbers you enter (for example income, savings and debt) are never sent to us or to anyone else.
 - **No third-party requests.** Fonts and all other files are served from this site. The pages do not load anything from Google Fonts, CDNs or other services. A Content Security Policy blocks connections to any other site.
 - **Storage on your device.** By default, nothing is stored on your device. If you tick **Remember my inputs on this device**, your inputs are saved in your browser's local storage, so they are still there next time. They never leave your device. Untick the box to delete them, or clear your browser's site data. The reel stores nothing. The tool sets no cookies.
+- **Offline copy and updates.** On the live site, your browser keeps a copy of the app's own files (pages, styles, fonts and icons) so the calculator opens without internet. This copy holds no personal data. To check for a new version, the browser asks this site for its update file, the same way it loads the pages. "Check for updates" at the bottom of the calculator does this on request; the browser also checks when you open the app and about every hour. Clear your browser's site data to remove the copy.
 - **Copy summary.** The "Copy summary for the bank" button only copies text to your clipboard. You decide where to paste it.
 - **Hosting.** The site is hosted on GitHub Pages. GitHub, Inc. may log technical data such as your IP address when your browser requests the pages, for example for security. We cannot see or control these logs. See the [GitHub General Privacy Statement](https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement).
 - **Your rights.** Because we do not receive or store any personal data about you, we have nothing to give you access to, correct or delete. Your saved inputs are under your own control, as described above. If you have questions, open an issue in this repository. Do not include personal or financial details in an issue, because issues are public.
@@ -101,7 +102,7 @@ Last updated: 26 November 2026.
 
 The tool is a static site with no server code, no database, no logins and no secrets. That leaves very little to attack. In addition:
 
-- A strict Content Security Policy allows only this site's own scripts, styles and fonts, and blocks connections to any other site. Pages send no referrer.
+- A strict Content Security Policy allows only this site's own scripts, styles, fonts and offline worker (sw.js), and blocks connections to any other site. Pages send no referrer.
 - Saved inputs are checked when they are loaded. Unknown keys, wrong types and out-of-range numbers are thrown away, so changed local storage cannot inject code.
 - The page shows only numbers and fixed text. It never inserts text you typed as HTML.
 - The MP4 renderer pins its one dependency (Playwright) with a lockfile. Dependabot watches it for security updates.

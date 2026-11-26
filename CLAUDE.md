@@ -8,10 +8,10 @@ Danish home-purchase cost calculator (ejerbolig and andelsbolig) plus the Housin
 
 ## Rules for every update
 
-1. **Version every change.** Bump major.minor.patch in all of these places: the footer of `index.html` and `reel/index.html` ("Boligberegner version X.Y.Z"), the "Version X.Y.Z" line in `README.md`, a new dated entry at the top of `CHANGELOG.md`, and `reel/package.json` (then run `npm install --package-lock-only --ignore-scripts` in `reel/`).
+1. **Version every change.** Bump major.minor.patch in all of these places: the footer of `index.html` and `reel/index.html` ("Boligberegner version X.Y.Z"), the "Version X.Y.Z" line in `README.md`, a new dated entry at the top of `CHANGELOG.md`, `reel/package.json` (then run `npm install --package-lock-only --ignore-scripts` in `reel/`), and the cache name in `sw.js` (`bb-X.Y.Z`). The cache name must change in every release, or the "Check for updates" button will not find the new version.
 2. **Push every update to GitHub** with a commit message that starts with "Release X.Y.Z:". The owner wants each update on GitHub and the version number reported back.
 3. **Never add videos** to the repo (no .mp4, .mov, .webm and so on). Rendered reels stay local; `.gitignore` blocks `*.mp4`.
-4. **Keep it secure.** Keep the Content Security Policy in both pages: same-site scripts, styles, fonts, images and manifest only; `connect-src 'none'`. No CDNs, analytics, cookies or third-party requests. Fonts are self-hosted in `fonts/`. Validate anything read from localStorage (see `clean()` in `assets/calculator.js`). Never insert user-typed text as HTML.
+4. **Keep it secure.** Keep the Content Security Policy in both pages: same-site scripts, styles, fonts, images, manifest and worker (`sw.js`) only; `connect-src 'none'`. No CDNs, analytics, cookies or third-party requests. Fonts are self-hosted in `fonts/`. Validate anything read from localStorage (see `clean()` in `assets/calculator.js`). Never insert user-typed text as HTML.
 5. **Privacy.** Inputs stay on the device and are saved only if the user ticks "Remember my inputs on this device". If a change starts to collect or send any data, update the privacy notice in `README.md` first.
 6. **Legal text.** Terms of use and the privacy notice live in `README.md` (anchors `#terms-of-use` and `#privacy-notice`, linked from both page footers). Update the "Last updated" dates when they change.
 7. **Licence.** All rights reserved (`LICENSE`), the same as Heartbeat. Fonts are SIL OFL 1.1 (`fonts/OFL.txt`).
@@ -20,9 +20,10 @@ Danish home-purchase cost calculator (ejerbolig and andelsbolig) plus the Housin
 
 | Path | Purpose |
 | --- | --- |
-| `index.html`, `assets/calculator.js`, `assets/calculator.css` | Calculator |
+| `index.html`, `assets/calculator.js`, `assets/calculator.css` | Calculator. Input info popups live in `INFO` in calculator.js: add an entry for every new input. |
 | `reel/index.html`, `reel/reel.js`, `reel/reel.css` | Interactive reel (canvas, 36 s, 1080×1920) |
 | `reel/render.js` | Renders the reel to MP4 locally (Playwright + ffmpeg) |
+| `sw.js` | Offline cache and updates (Heartbeat pattern). Registered only on github.io. Add new app files to its `FILES` list. |
 | `assets/fonts.css`, `fonts/` | Self-hosted fonts |
 | `icon.svg`, `icon-180.png`, `icon-512.png`, `manifest.webmanifest` | App icon and home-screen settings |
 

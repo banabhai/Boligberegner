@@ -99,6 +99,79 @@ const F=[
  ['crit','fLow','Tax value above the band','Rentefradrag over grænsen','num',25,null,{u:'%',step:0.5}]
 ];
 
+/* ---- info popups: [what it means, how to find it, where the default comes from] ---- */
+const EX='An example figure, not a statistic. Replace it with your own.';
+const TY='A rough typical level. It changes when you switch between House and Apartment.';
+const FEE='A typical level in 2026. Check the figure in your loan offer.';
+const TL='The 2026 rate set by law (tinglysningsafgiftsloven), see skat.dk.';
+const INFO={
+ adults:['How many adults will be on the loan. The bank adds up their incomes and debts.','Count everyone who will sign the loan documents.',EX],
+ kids:['Children living at home. The bank’s minimum rådighedsbeløb goes up for each child.','Count the children who live with you.',EX],
+ inc1:['Yearly pay before tax and AM-bidrag (bruttoindkomst), including fixed bonuses the bank can count.','See “Lønindkomst” on your årsopgørelse or forskudsopgørelse at skat.dk, or multiply the gross monthly pay on your payslip by 12.',EX],
+ inc2:['Yearly pay before tax and AM-bidrag for the second adult.','See “Lønindkomst” on their årsopgørelse or forskudsopgørelse at skat.dk, or multiply the gross monthly pay on their payslip by 12.',EX],
+ netOverride:['What the household is actually paid each month after tax. The bank uses it for the rådighedsbeløb.','Add up “Udbetalt” on your latest payslips, or use the monthly figures on your forskudsopgørelse at skat.dk.','At 0 the calculator estimates net pay from gross income with 2026 tax rates from skat.dk, without church tax or pension.'],
+ savings:['Cash you can put into the purchase: the down payment plus all purchase costs.','Add up your bank and savings accounts, minus any buffer you want to keep. Pension savings do not count.',EX],
+ otherDebt:['Everything else you owe, such as car loans, SU loans, credit cards and consumer loans. It counts in the gældsfaktor.','Check your bank and loan statements. SU debt is shown by Udbetaling Danmark on borger.dk.',EX],
+ otherDebtPay:['What you pay each month on your other debt.','See your loan statements or the payment overview in your online bank.',EX],
+ fixedExp:['Fixed monthly costs that are not housing or debt. The bank subtracts them before it checks what is left.','Go through 3 months of bank statements and average your fixed payments.',EX],
+ propType:['House or apartment. It switches the default running costs, maintenance and land share.','See the sales listing (salgsopstilling).','An example. Pick the type you are buying.'],
+ price:['The asking or agreed price (kontantpris).','See the listing on boligsiden.dk or the estate agent’s salgsopstilling.',EX],
+ aPrice:['What you pay the seller for the andel, including improvements (forbedringer). The association sets the highest legal price.','See the seller’s price list and the association’s nøgleoplysningsskema.',EX],
+ losore:['Movable items bought with the andel, such as white goods or furniture, priced separately.','See the seller’s list of løsøre in the sales material.',EX],
+ udbPct:['The share of the price you pay from your own savings.','Agree it with your bank. It must be at least 5%.','The legal minimum in the “god skik” rules for home loans (bekendtgørelse om god skik for boligkredit, Finanstilsynet).'],
+ valPct:['The public property valuation (ejendomsvurdering) as a share of the price. Ejendomsværdiskat is worked out from it.','Search the address on vurderingsportalen.dk and divide the valuation by the price.','An example assumption. Use the real valuation when you have it.'],
+ grundPct:['The land value (grundværdi) as a share of the price. Grundskyld is worked out from it.','Search the address on vurderingsportalen.dk and divide the land value by the price.','A rough typical level: 35% for a house, 10% for an apartment. It changes when you switch type.'],
+ promille:['The municipal land tax rate, in per mille of the taxable land value.','Look up your kommune’s grundskyldspromille on the kommune’s website or at skat.dk.','A mid-range example. The rate differs by kommune, roughly 5–30‰.'],
+ boligafgift:['The monthly fee you pay to the andelsboligforening.','See the nøgleoplysningsskema or the sales material for the andel.',EX],
+ fDebt:['Your share of the association’s debt. You do not owe it personally, but you pay for it through the boligafgift.','See the association’s annual accounts (årsregnskab) or the nøgleoplysningsskema, and use your flat’s share (fordelingstal).',EX],
+ inclFDebt:['Whether the bank counts your share of the association’s debt in your gældsfaktor.','Ask your bank how it treats andelsbolig debt.','Most banks look at personal debt only.'],
+ rkProduct:['The type of realkredit loan.','Choose it with your bank or realkredit institute (for example Totalkredit, Nykredit, Realkredit Danmark or Jyske Realkredit).','F5 is a common choice. Picking a type fills in a typical rate and bond price.'],
+ rkRate:['The interest rate on the realkreditlån, without bidrag.','See your loan offer (lånetilbud) or the current rates on your realkredit institute’s website.','A placeholder near October 2026 levels. It changes when you pick another mortgage type.'],
+ rkKurs:['The price of the bonds behind the loan. At 100 you get the full amount paid out.','See your loan offer or the institute’s daily price list.','Typical: 100 for adjustable loans, around 98 for fixed rate. It changes when you pick another mortgage type.'],
+ rkTerm:['How many years until the mortgage is paid off.','It is set in your loan offer, usually 30 years.','The longest standard term.'],
+ rkIO:['Pay only interest and bidrag for the first 10 years, with no repayment.','Ask your bank. It usually needs a low loan-to-value or a strong budget.','Most first-time buyers start with repayment.'],
+ bankRate:['The interest rate on the bank loan (boliglån) that covers 80–95% of the price.','See your bank’s loan offer.','A placeholder near October 2026 bank levels.'],
+ bankTerm:['Years to repay the bank loan.','See your bank’s loan offer, often 10–30 years.','A common choice.'],
+ bid1:['The yearly fee (bidrag) the realkredit institute charges on the part of the loan up to 40% of the value.','See your institute’s published bidragssatser or your loan offer.','Rounded from the large Danish institutes’ published rates. Check yours.'],
+ bid2:['The yearly bidrag on the part of the loan between 40% and 60% of the value.','See your institute’s published bidragssatser or your loan offer.','Rounded from the large Danish institutes’ published rates. Check yours.'],
+ bid3:['The yearly bidrag on the part of the loan between 60% and 80% of the value.','See your institute’s published bidragssatser or your loan offer.','Rounded from the large Danish institutes’ published rates. Check yours.'],
+ aRate:['The interest rate on the bank’s andelsboliglån.','See your bank’s loan offer. Rates differ a lot between banks.','A placeholder near October 2026 levels. The cheapest offers start around 3%.'],
+ aTerm:['Years to repay the andel loan.','See your bank’s loan offer, often up to 30 years.','A common maximum.'],
+ forsikring:['Yearly house and owners’ insurance (hus- og grundejerforsikring).','See the ejerudgift in the salgsopstilling, or get a quote from an insurer.',TY],
+ varme:['The monthly heating cost.','See the salgsopstilling, the energy label (energimærke) or ask the seller for last year’s bills.',TY],
+ el:['The monthly electricity cost.','Use your current bills, adjusted for the size of the new home.',TY],
+ vand:['Water and drainage (vand og afledning).','See the salgsopstilling or the local water company. For apartments it is often in the common costs.',TY],
+ renovation:['The kommune’s fee for waste collection.','See the ejerudgift in the salgsopstilling or the kommune’s website.',TY],
+ faelles:['The monthly fee to the ejerforening or grundejerforening.','See the salgsopstilling or the association’s budget.',TY],
+ vedlPct:['Money set aside each year for repairs and upkeep, as a share of the price.','Read the tilstandsrapport and elinstallationsrapport for repairs that are coming.','A common rule of thumb: about 1% a year for a house and 0.4% for an apartment.'],
+ aIndbo:['Contents insurance for your belongings. Building insurance is in the boligafgift.','Get a quote from your insurer.',EX],
+ aVarme:['The monthly aconto payment for heating.','See the nøgleoplysningsskema or ask the association’s administrator.',EX],
+ aEl:['The monthly electricity cost.','Use your current bills.',EX],
+ aVand:['Water, only if it is billed separately from the boligafgift.','Ask the association or see the nøgleoplysningsskema.','Water is usually in the boligafgift.'],
+ aVedl:['Upkeep inside your flat, such as paint, floors, kitchen and bathroom. The association keeps up the building.','Look at the condition of the flat and the association’s rules (vedtægter).',EX],
+ raadgiver:['The fee for a buyer’s adviser or lawyer who checks the deal for you.','Ask 2–3 advisers for a fixed price.','A typical fixed price in 2026.'],
+ ejerskifte:['Your half of the change-of-ownership insurance. The seller pays the other half when there is a tilstandsrapport and elinstallationsrapport.','See the insurance offer in the sales material.','A typical level for a house.'],
+ rkGebyr:['The realkredit institute’s fee for setting up the loan.','See “omkostninger” in your loan offer.',FEE],
+ rkKurtPct:['Brokerage and settlement fees on the bonds, as a share of the loan.','See “omkostninger” in your loan offer.',FEE],
+ bankStiftPct:['The bank’s one-off fee for arranging the bank loan, as a share of the loan.','See your bank’s loan offer.',FEE],
+ bankGebyr:['The bank’s fixed fee for setting up the loan.','See your bank’s loan offer.',FEE],
+ skoedeFix:['The fixed state fee to register the deed (skøde).','It is set by law. See skat.dk or tinglysning.dk.',TL],
+ skoedePct:['The variable state fee to register the deed, as a share of the price.','It is set by law. See skat.dk or tinglysning.dk.',TL],
+ aRaadgiver:['The fee for an adviser who checks the andel, the association’s accounts and the contract.','Ask 2–3 advisers for a fixed price.','A typical fixed price in 2026.'],
+ aAdmin:['The administrator’s fee for transferring the andel, if you pay part of it.','Ask the association’s administrator.','The seller usually pays it.'],
+ aStiftPct:['The bank’s one-off fee for arranging the andel loan, as a share of the loan.','See your bank’s loan offer.',FEE],
+ aGebyr:['The bank’s fixed fee for setting up the andel loan.','See your bank’s loan offer.',FEE],
+ pantFix:['The fixed state fee to register the loan (pant), in the land register or the andelsboligbogen.','It is set by law. See skat.dk or tinglysning.dk.',TL],
+ pantPct:['The variable state fee to register the loan, as a share of the loan.','It is set by law. See skat.dk or tinglysning.dk.',TL+' It was lowered from 1.45% on 1 January 2026.'],
+ gfLimit:['The highest total debt divided by household gross income that the bank accepts.','Ask your bank. Most want 3.5–4.0.','Finanstilsynet’s guidance: above 4, with more than 60% loan-to-value, banks limit the loan types they offer.'],
+ perAdult:['The money the bank wants each adult to have left every month after housing, debt and fixed bills.','Ask your bank for its rådighedsbeløb rules. Each bank sets its own.','A typical level in Danish banks. It is not an official figure.'],
+ perChild:['The money the bank wants left every month for each child.','Ask your bank for its rådighedsbeløb rules. Each bank sets its own.','A typical level in Danish banks. It is not an official figure.'],
+ stressPP:['How much higher the bank tests the interest rates, to see that you can still pay if rates rise.','Ask your bank how it stress-tests.','A common choice. Your bank may test differently.'],
+ fHigh:['How much tax you save per krone of interest and bidrag, on the first band.','See the tax value of negative kapitalindkomst on skat.dk.','About 33% in 2026 (skat.dk). It depends on your kommune and church tax.'],
+ fThr:['The amount of interest per adult that gets the higher tax value.','It is set by law. See skat.dk. Married couples can share it.','The 2026 limit per person (skat.dk).'],
+ fLow:['How much tax you save per krone of interest above the band.','See the tax value of negative kapitalindkomst on skat.dk.','About 25% in 2026 (skat.dk).']
+};
+
 const DEF={mode:'ejer'};F.forEach(f=>DEF[f[1]]=f[5]);
 let S=Object.assign({},DEF);
 const MAX=1e9;
@@ -147,6 +220,7 @@ function buildLedger(){
         w.className='f chk';
         w.innerHTML=`<input id="i-${id}" type="checkbox"><label for="i-${id}">${label} <span class="da">· ${da}</span></label>${help}`;
       }
+      if(INFO[id])addTip(w,f);
       box.appendChild(w);
     });
     ledger.appendChild(d);
@@ -154,6 +228,8 @@ function buildLedger(){
   ledger.addEventListener('input',onInput);
   ledger.addEventListener('change',onInput);
   ledger.addEventListener('click',e=>{
+    const q=e.target.closest('.qi');
+    if(q){tipOpen===q&&tipPinned?hideTip():showTip(q,true);return}
     const b=e.target.closest('.seg button');if(!b)return;
     const id=b.closest('.f').dataset.id;let v=b.dataset.v;if(id==='adults')v=+v;
     S[id]=v;
@@ -161,6 +237,47 @@ function buildLedger(){
     sync();calc();save();
   });
 }
+// "?" button after each label. Text comes from INFO (constants), set with textContent.
+function defText(f){
+  const [,,,,type,def,,o]=f;
+  if(type==='chk')return def?'On':'Off';
+  if(type!=='num')return String((o.opts.find(x=>String(x[0])===String(def))||[,def])[1]);
+  return (def.toLocaleString('da-DK')+' '+(o.u||'')).trim();
+}
+function addTip(w,f){
+  const [,id,label]=f,[what,how,src]=INFO[id];
+  const lab=w.querySelector('label'),lh=document.createElement('div');lh.className='lh';
+  lab.replaceWith(lh);
+  const b=document.createElement('button');b.type='button';b.className='qi';b.textContent='?';
+  b.setAttribute('aria-label','About: '+label);b.setAttribute('aria-expanded','false');b.setAttribute('aria-controls','tip-'+id);
+  lh.append(lab,b);
+  const t=document.createElement('div');t.className='tip';t.id='tip-'+id;t.setAttribute('role','note');t.hidden=true;
+  [['What it is',what],['How to find it',how],['Default: '+defText(f),src]].forEach(([h,txt])=>{
+    const p=document.createElement('p'),s=document.createElement('strong');s.textContent=h+'. ';p.append(s,txt);t.append(p);
+  });
+  w.append(t);
+}
+let tipOpen=null,tipPinned=false;
+function showTip(b,pin){
+  if(tipOpen&&tipOpen!==b)hideTip();
+  document.getElementById(b.getAttribute('aria-controls')).hidden=false;
+  b.setAttribute('aria-expanded','true');tipOpen=b;tipPinned=pin;
+}
+function hideTip(){
+  if(!tipOpen)return;
+  document.getElementById(tipOpen.getAttribute('aria-controls')).hidden=true;
+  tipOpen.setAttribute('aria-expanded','false');tipOpen=null;tipPinned=false;
+}
+const canHover=matchMedia('(hover:hover) and (pointer:fine)');
+ledger.addEventListener('mouseover',e=>{const q=e.target.closest('.qi');if(q&&canHover.matches&&!tipPinned)showTip(q,false)});
+ledger.addEventListener('mouseout',e=>{
+  if(!tipOpen||tipPinned||!e.target.closest('.qi,.tip'))return;
+  const to=e.relatedTarget&&e.relatedTarget.closest?e.relatedTarget.closest('.qi,.tip'):null;
+  if(to!==tipOpen&&!(to&&to.id===tipOpen.getAttribute('aria-controls')))hideTip();
+});
+document.addEventListener('click',e=>{if(tipOpen&&!e.target.closest('.qi,.tip'))hideTip()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&tipOpen){const b=tipOpen;hideTip();b.focus()}});
+
 function onInput(e){
   const el=e.target;if(!el.id||!el.id.startsWith('i-'))return;
   const id=el.id.slice(2);const f=F.find(x=>x[1]===id);if(!f)return;
@@ -458,4 +575,31 @@ buildLedger();sync();calc();
 if(saved)$('exnote').hidden=true;
 const rem=$('remember');rem.checked=remember;
 rem.addEventListener('change',()=>{remember=rem.checked;remember?save():forget();flash(remember?'Saved on this device':'Removed from this device')});
+
+/* ---- updates, the same way as Heartbeat ---- */
+// Live site only: cache the app so it opens offline. A new release (new sw.js) installs itself;
+// the page then offers Restart, so nothing being typed is lost. Saved inputs are untouched.
+if('serviceWorker' in navigator&&location.protocol==='https:'&&location.hostname.endsWith('github.io'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+if('serviceWorker' in navigator){
+  const sw=navigator.serviceWorker;let wanted=false,claimed=!!sw.controller;
+  // the first take-over on a brand-new install is not an update
+  sw.addEventListener('controllerchange',()=>{if(!claimed){claimed=true;return}if(wanted)location.reload();else $('upd-bar').hidden=false});
+  $('upd-restart').addEventListener('click',()=>location.reload());
+  const check=()=>sw.getRegistration().then(r=>r&&r.update()).catch(()=>{});
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')check()});
+  setInterval(check,3600000);
+  $('upd-btn').addEventListener('click',async()=>{
+    const st=$('upd-status'),b=$('upd-btn');
+    if(!$('upd-bar').hidden){location.reload();return}
+    const reg=await sw.getRegistration().catch(()=>null);
+    if(!reg){st.textContent='Loading the latest version…';location.reload();return}
+    b.disabled=true;st.textContent='Checking…';wanted=true;
+    try{await reg.update()}catch(e){wanted=false;b.disabled=false;st.textContent='Could not check. Connect to the internet and try again.';return}
+    const w=reg.installing||reg.waiting;
+    if(!w){wanted=false;b.disabled=false;st.textContent='You have the latest version.';return}
+    st.textContent='New version found. Installing…';
+    w.addEventListener('statechange',()=>{if(w.state==='redundant'){wanted=false;b.disabled=false;st.textContent='The update did not finish. Try again later.'}});
+    if(reg.waiting)reg.waiting.postMessage('skip');
+  });
+}else $('upd-btn').addEventListener('click',()=>location.reload());
 })();
