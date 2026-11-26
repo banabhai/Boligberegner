@@ -4,7 +4,7 @@ Boligberegner calculates what it costs to buy a home in Denmark, for both **ejer
 
 This first version covers Denmark only. The plan is to add more countries later.
 
-**Version 1.1.0.** See [CHANGELOG.md](CHANGELOG.md) for what changed in each version. The version is also shown at the bottom of each page.
+**Version 1.1.1.** See [CHANGELOG.md](CHANGELOG.md) for what changed in each version. The version is also shown at the bottom of each page.
 
 ![Calculator](examples/calculator.jpg)
 
@@ -37,7 +37,7 @@ The **Housing Math Reel** (`reel/`) shows the same 4 steps as a 36-second vertic
 
 ## Use it
 
-Open the live site at https://banabhai.github.io/boligberegner/ (once GitHub Pages is turned on), or open `index.html` in a browser. Nothing to install and no account needed.
+Open the live site at https://banabhai.github.io/Boligberegner/ (once GitHub Pages is turned on), or open `index.html` in a browser. Nothing to install and no account needed.
 
 **On your phone:** open the site, then add it to your home screen. On iPhone, tap Share, then **Add to Home Screen**. On Android, tap ⋮, then **Add to Home screen**. It opens full screen with its own icon. It still needs an internet connection.
 
