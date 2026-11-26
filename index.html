@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Boligberegner</title>
+<link rel="stylesheet" href="assets/fonts.css">
+<link rel="stylesheet" href="assets/calculator.css">
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div>
+      <h1>Boligberegner</h1>
+      <p>Your housing loan and costs, worked out in the 4 steps from the video and judged by the tests a Danish bank applies: udbetaling, gældsfaktor, rådighedsbeløb and a rate stress test.</p>
+    </div>
+    <div class="modes">
+      <div class="seg" role="group" aria-label="Type of home">
+        <button id="m-ejer" data-mode="ejer">Ejerbolig</button>
+        <button id="m-andel" data-mode="andel">Andelsbolig</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="grid">
+    <aside class="ledger" id="ledger" aria-label="Inputs"></aside>
+
+    <main class="results">
+      <div class="example" id="exnote">Example figures are loaded. Replace them with your own. Nothing you type leaves your device.</div>
+      <section class="verdict" id="verdict" aria-live="polite"></section>
+
+      <section>
+        <h3 style="margin-bottom:10px">The 4-step housing math <span class="da">· Danish version</span></h3>
+        <div class="steps" id="steps"></div>
+      </section>
+
+      <section class="maxp" id="maxp"></section>
+
+      <section class="panel">
+        <h2>Where the monthly money goes <span class="da">· månedlig boligudgift, år 1</span></h2>
+        <p class="small">Before tax. The repayment slice (afdrag) is money you save into the home, not a cost.</p>
+        <div class="bar" id="bar"></div>
+        <div class="legend" id="legend"></div>
+      </section>
+
+      <div class="cols">
+        <section class="panel"><h2>Cash at purchase <span class="da">· udbetaling og handelsomkostninger</span></h2><p class="small">Paid from savings before you get the keys.</p><div class="tw" id="t-cash"></div></section>
+        <section class="panel"><h2>Loans <span class="da">· lån</span></h2><p class="small">Year 1 figures. Interest and bidrag are tax-deductible.</p><div class="tw" id="t-loans"></div></section>
+        <section class="panel"><h2>Monthly housing budget <span class="da">· boligbudget</span></h2><p class="small">Before and after rentefradrag (interest deduction).</p><div class="tw" id="t-month"></div></section>
+        <section class="panel"><h2>The bank's test <span class="da">· kreditvurdering</span></h2><p class="small">Normal rates and a stress test with higher rates.</p><div class="tw" id="t-bank"></div></section>
+      </div>
+
+      <section class="panel">
+        <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:10px">
+          <h2>Assumptions <span class="da">· forudsætninger</span></h2>
+          <div class="toolbar"><button class="btn primary" id="copy">Copy summary for the bank</button><button class="btn" id="reset">Reset to example</button><label class="remember"><input type="checkbox" id="remember"> Remember my inputs on this device</label><span class="toast" id="toast"></span></div>
+        </div>
+        <div class="notes">
+          <p><strong>Minimum 5% udbetaling</strong> applies to both ejerbolig and andelsbolig. For an ejerbolig, realkredit lends up to 80% of the price and a bank loan (boliglån) covers 80–95%.</p>
+          <p><strong>Gældsfaktor</strong> means total debt divided by household gross income. Banks typically want 3.5–4.0. Above 4, with more than 60% loan-to-value, Finanstilsynet's guidance means banks normally only offer fixed rate or F5+ loans with afdrag.</p>
+          <p><strong>Rådighedsbeløb</strong> means what is left each month after tax, housing, other debt and fixed bills. Every bank, including Nordea, Danske Bank, Jyske Bank and Djurs Bank, sets its own minimum. The defaults here are typical levels, so edit them to match your bank.</p>
+          <p><strong>Tinglysningsafgift 2026:</strong> skøde 1,850 kr + 0.6% of price. Pant 1,825 kr + 1.25% of the loan (lowered from 1.45% on 1 Jan 2026). The same pant rate applies when you pledge an andel.</p>
+          <p><strong>Ejendomsværdiskat</strong> is 0.51% of 80% of the public valuation up to 9.2m kr, and 1.4% above that. <strong>Grundskyld</strong> is the municipal rate (promille) × 80% of the land value. Andelshavere pay neither directly, because both are in the boligafgift.</p>
+          <p><strong>Rentefradrag:</strong> about 33% on the first 50,000 kr of interest per person, and 25% above that. Andelslån interest is deductible. The association's own debt is not.</p>
+          <p><strong>Net income</strong> is estimated with 2026 rates (AM-bidrag 8%, average kommuneskat 25%, bundskat, beskæftigelsesfradrag, mellem- and topskat), excluding church tax and pension. For accuracy, type your real monthly net pay from your forskudsopgørelse.</p>
+          <p><strong>Rates</strong> are placeholders near October 2026 levels: F3/F5 about 3.3–3.5% and cheapest andelslån from about 3%. Replace them with the offer from your bank and realkredit institute. This is a planning tool, not a loan offer or financial advice.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+<footer class="foot">
+  <span>Boligberegner version 1.0.0</span>
+  <span>Estimates only. Not financial advice.</span>
+  <a href="https://github.com/banabhai/boligberegner#terms-of-use" target="_blank" rel="noopener noreferrer">Terms of use</a>
+  <a href="https://github.com/banabhai/boligberegner#privacy-notice" target="_blank" rel="noopener noreferrer">Privacy</a>
+  <a href="reel/">Housing Math Reel</a>
+</footer>
+</div>
+
+<script src="assets/calculator.js"></script>
+</body>
+</html>

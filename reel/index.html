@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data:; connect-src 'none'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="claude:viewport-fit-sides" content="cover">
+<title>Housing Math Reel</title>
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="reel.css">
+</head>
+<body>
+<div class="wrap">
+  <div class="stage"><canvas id="cv" width="1080" height="1920" aria-label="Animated housing math reel"></canvas></div>
+  <div class="ctl">
+    <div><h1>Housing Math Reel</h1><p>A faceless 36-second reel of the Danish 4-step housing math. Change the price or home type and it re-runs with new numbers.</p></div>
+    <div class="card">
+      <div class="seg" role="group" aria-label="Type of home"><button id="m-ejer" data-mode="ejer">Ejerbolig</button><button id="m-andel" data-mode="andel">Andelsbolig</button></div>
+      <div><label for="price" id="plabel">Purchase price</label><div class="inp"><input id="price" type="number" step="50000" inputmode="numeric"><span>kr</span></div></div>
+      <div id="feeRow" hidden><label for="fee">Boligafgift per month</label><div class="inp"><input id="fee" type="number" step="100" inputmode="numeric"><span>kr/md</span></div></div>
+    </div>
+    <div class="card">
+      <div class="row"><button class="btn primary" id="play">Pause</button><button class="btn" id="restart">Restart</button></div>
+      <div class="row"><input type="range" id="scrub" min="0" max="36" step="0.01" aria-label="Position in reel"><span class="t" id="time">0.0s</span></div>
+    </div>
+    <p class="small">Assumes 5% udbetaling, F5 realkredit at 3.5% plus a bank loan at 5.5% (ejerbolig) or an andelslån at 4.0%, 2 adults and 1 child, and October 2026 tax and fee rates. Estimates only, not financial advice.</p>
+  <footer class="foot">
+  <span>Boligberegner version 1.0.0</span>
+  <span>Estimates only. Not financial advice.</span>
+  <a href="https://github.com/banabhai/boligberegner#terms-of-use" target="_blank" rel="noopener noreferrer">Terms of use</a>
+  <a href="https://github.com/banabhai/boligberegner#privacy-notice" target="_blank" rel="noopener noreferrer">Privacy</a>
+  <a href="../">Calculator</a>
+</footer>
+</div>
+</div>
+
+<script src="reel.js"></script>
+</body>
+</html>

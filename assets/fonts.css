@@ -1,0 +1,8 @@
+/* Self-hosted fonts (SIL OFL 1.1, see fonts/OFL.txt). No request goes to a font CDN. */
+@font-face{font-family:"Archivo";src:url(../fonts/Archivo-wdth.woff2) format("woff2");font-weight:100 900;font-stretch:62% 125%;font-display:swap}
+@font-face{font-family:"Archivo Narrow";src:url(../fonts/ArchivoNarrow-SemiBold.woff2) format("woff2");font-weight:600;font-display:swap}
+@font-face{font-family:"Archivo Narrow";src:url(../fonts/ArchivoNarrow-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
+@font-face{font-family:"Public Sans";src:url(../fonts/PublicSans.woff2) format("woff2");font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:"Public Sans";src:url(../fonts/PublicSans-Italic.woff2) format("woff2");font-weight:100 900;font-style:italic;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(../fonts/IBMPlexMono-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url(../fonts/IBMPlexMono-Medium.woff2) format("woff2");font-weight:500;font-display:swap}

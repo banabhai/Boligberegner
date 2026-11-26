@@ -1,0 +1,14 @@
+Copyright (c) 2026 banabhai. All rights reserved.
+
+This repository and the Boligberegner application, including the Housing Math
+Reel, its source code, text and design, are proprietary. No licence is granted
+to copy, modify, merge, publish, distribute, sublicense or sell any part of it,
+except where the owner gives written permission. Viewing the code on GitHub, or
+using the published website, does not grant any rights beyond using the website
+as described in the terms of use in README.md.
+
+Third-party material keeps its own licence:
+- Fonts in fonts/: Archivo, Archivo Narrow, Public Sans and IBM Plex Mono,
+  SIL Open Font License 1.1 (see fonts/OFL.txt)
+- Playwright (used only by reel/render.js, not included in this repository):
+  Apache License 2.0

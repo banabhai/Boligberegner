@@ -1,0 +1,14 @@
+{
+  "name": "boligreel-render",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Renders the Housing Math Reel to MP4",
+  "license": "UNLICENSED",
+  "scripts": {
+    "render:ejer": "node render.js ejer 3000000 reel_ejerbolig.mp4",
+    "render:andel": "node render.js andel 1750000 reel_andelsbolig.mp4"
+  },
+  "dependencies": {
+    "playwright": "1.56.1"
+  }
+}
